@@ -29,19 +29,19 @@ ARG MUD_INDEXER_ENABLED
 ENV MUD_INDEXER_ENABLED=${MUD_INDEXER_ENABLED}
 
 # Cache elixir deps
-ADD mix.exs mix.lock ./
-ADD apps/block_scout_web/mix.exs ./apps/block_scout_web/
-ADD apps/explorer/mix.exs ./apps/explorer/
-ADD apps/ethereum_jsonrpc/mix.exs ./apps/ethereum_jsonrpc/
-ADD apps/indexer/mix.exs ./apps/indexer/
+COPY mix.exs mix.lock ./
+COPY apps/block_scout_web/mix.exs ./apps/block_scout_web/
+COPY apps/explorer/mix.exs ./apps/explorer/
+COPY apps/ethereum_jsonrpc/mix.exs ./apps/ethereum_jsonrpc/
+COPY apps/indexer/mix.exs ./apps/indexer/
 
 ENV MIX_HOME=/opt/mix
 RUN mix local.hex --force
 RUN mix do deps.get, local.rebar --force, deps.compile
 
-ADD apps ./apps
-ADD config ./config
-ADD rel ./rel
+COPY apps ./apps
+COPY config ./config
+COPY rel ./rel
 ADD *.exs ./
 
 RUN apk add --update nodejs npm
