@@ -29,7 +29,7 @@ function transpileViewScript(file) {
 };
 
 const jsOptimizationParams = {
-  parallel: true
+  parallel: false
 }
 
 const appJs =
