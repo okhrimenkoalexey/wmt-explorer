@@ -97,6 +97,7 @@ defmodule BlockScoutWeb.Mixfile do
       {:ex_cldr, "~> 2.38"},
       {:ex_cldr_numbers, "~> 2.33"},
       {:ex_cldr_units, "~> 3.17"},
+      {:ex_keccak, "~> 0.7.5"},
       {:cldr_utils, "~> 2.3"},
       {:ex_machina, "~> 2.1", only: [:test]},
       {:explorer, in_umbrella: true},
@@ -105,7 +106,7 @@ defmodule BlockScoutWeb.Mixfile do
       # HTML CSS selectors for Phoenix controller tests
       {:floki, "~> 0.31"},
       {:flow, "~> 1.2"},
-      {:gettext, "~> 0.24.0"},
+      {:gettext, "~> 0.25.0"},
       {:hammer, "~> 6.0"},
       {:httpoison, "~> 2.0"},
       {:indexer, in_umbrella: true, runtime: false},

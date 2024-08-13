@@ -37,13 +37,22 @@ defmodule Explorer.Chain.SmartContract do
   @typep api? :: {:api?, true | false}
 
   @burn_address_hash_string "0x0000000000000000000000000000000000000000"
+  @dead_address_hash_string "0x000000000000000000000000000000000000dEaD"
 
   @doc """
     Returns burn address hash
   """
-  @spec burn_address_hash_string() :: String.t()
+  @spec burn_address_hash_string() :: EthereumJSONRPC.address()
   def burn_address_hash_string do
     @burn_address_hash_string
+  end
+
+  @doc """
+    Returns dead address hash
+  """
+  @spec dead_address_hash_string() :: EthereumJSONRPC.address()
+  def dead_address_hash_string do
+    @dead_address_hash_string
   end
 
   @default_sorting [desc: :id]
@@ -513,11 +522,11 @@ defmodule Explorer.Chain.SmartContract do
   Returns SmartContract by the given smart-contract address hash, if it is partially verified
   """
   @spec select_partially_verified_by_address_hash(binary() | Hash.t(), keyword) :: boolean() | nil
-  def select_partially_verified_by_address_hash(address_hash, options \\ []) do
+  def select_partially_verified_by_address_hash(address_hash_string, options \\ []) do
     query =
       from(
         smart_contract in __MODULE__,
-        where: smart_contract.address_hash == ^address_hash,
+        where: smart_contract.address_hash == ^address_hash_string,
         select: smart_contract.partially_verified
       )
 

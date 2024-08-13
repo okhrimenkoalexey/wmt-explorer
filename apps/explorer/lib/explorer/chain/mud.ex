@@ -69,8 +69,9 @@ defmodule Explorer.Chain.Mud do
     paging_options = Keyword.get(options, :paging_options, Chain.default_paging_options())
 
     Mud
-    |> select([r], r.address)
     |> distinct(true)
+    |> select([r], r.address)
+    |> where([r], r.table_id == ^@store_tables_table_id)
     |> page_worlds(paging_options)
     |> limit(^paging_options.page_size)
     |> Repo.Mud.all()
@@ -154,6 +155,8 @@ defmodule Explorer.Chain.Mud do
 
   defp filter_tables_by_namespace(query, nil), do: query
 
+  defp filter_tables_by_namespace(query, :error), do: query |> where([tb], false)
+
   defp filter_tables_by_namespace(query, namespace) do
     query |> where([tb], fragment("substring(? FROM 3 FOR 14)", tb.key0) == ^namespace)
   end
@@ -219,6 +222,8 @@ defmodule Explorer.Chain.Mud do
   end
 
   defp filter_records(query, _key_name, nil), do: query
+
+  defp filter_records(query, _key_name, :error), do: query |> where([r], false)
 
   defp filter_records(query, :key0, key), do: query |> where([r], r.key0 == ^key)
 
